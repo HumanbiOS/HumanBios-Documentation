@@ -7,6 +7,7 @@ This is system documentation for the HumanBios project
 ```
 $ sudo apt-get install -y graphviz
 $ sudo apt-get install python3-sphinx
+$ sudo pip3 install sphinx_rtd_theme
 $ git clone https://github.com/HumanbiOS/HumanBios-Documentation.git
 ```
 Navigate to docs/build/html and open index.html
