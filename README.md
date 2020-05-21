@@ -9,3 +9,15 @@ $ sudo apt-get install -y graphviz
 $ sudo apt-get install python3-sphinx
 $ git clone git@github.com:HumanbiOS/Humanbios-Documentation.git
 ```
+Navigate to docs/build/html and open index.html
+
+## Build
+Add the necessary .rst files under docs/source and link them in index.rst toctree
+```
+$ cd docs
+$ make html
+```
+
+## Need help?
+https://www.sphinx-doc.org/en/master/index.html
+
