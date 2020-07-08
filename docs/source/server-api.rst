@@ -10,25 +10,20 @@ Setup
 To register on the server you need to send post request to your server's url on the following path (where ``example.com`` is your server's domain) - ``example.com/api/setup``  
 
 Request data:  
-.. example-code::
-
-  .. code-block:: JSON 
-  
-    {  
-        "security_token": SERVER_TOKEN,  
-        "url": "{your_app_url}/api/webhook/out"  
-    }  
+::
+  {  
+      "security_token": SERVER_TOKEN,  
+      "url": "{your_app_url}/api/webhook/out"  
+  }  
 
 Server will send messages to the ``"url"``, so it's setup is required (webhook logic)  
 
 Response data:  
-.. example-code::
-
-  .. code-block:: JSON
-    {  
-        "token": "YOUR_UNIQUE_SECURITY_TOKEN",  
-        "name": "YOUR_CREDENTIALS_UNQIUE_NAME"  
-    }  
+::  
+  {  
+      "token": "YOUR_UNIQUE_SECURITY_TOKEN",  
+      "name": "YOUR_CREDENTIALS_UNQIUE_NAME"  
+  }  
 
 Both of the value above are required for all following requests
 
@@ -36,25 +31,23 @@ Process messages
 ~~~~~~~~~~~~~~~~
 
 Request data:  
-.. example-code::
-
-  .. code-block:: JSON  
-    {  
-        "user": {  
-            "first_name": name,  
-            "user_id": user_id  
-        },  
-        "chat": {  
-            "chat_id": chat_id  
-        },  
-        "service_in": service_name,  
-        "security_token": $(token),  
-        "via_instance": $(name),  
-        "has_message": True,  
-        "message": {  
-            "text": text  
-        }  
-    }  
+::
+  {  
+      "user": {  
+          "first_name": name,  
+          "user_id": user_id  
+      },  
+      "chat": {  
+          "chat_id": chat_id  
+      },  
+      "service_in": service_name,  
+      "security_token": $(token),  
+      "via_instance": $(name),  
+      "has_message": True,  
+      "message": {  
+          "text": text  
+      }  
+  }  
 
 
 Values:  
