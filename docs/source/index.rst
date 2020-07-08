@@ -13,7 +13,7 @@ HumanBios
    frontend-facebook
    frontend-telegram
    humanbios-server
-
+   server-api
 
 Indices and tables
 ==================
