@@ -14,6 +14,7 @@ HumanBios
    frontend-telegram
    humanbios-server
    server-api
+   server-core
 
 Indices and tables
 ==================

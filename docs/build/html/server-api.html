@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using server API &mdash; HumanBios stable documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="server-core.html" />
+    <link rel="prev" title="HumanBios Server" href="humanbios-server.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> HumanBios
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="license.html">Licence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frontend-facebook.html">Frontend-Facebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frontend-telegram.html">Frontend-Telegram</a></li>
+<li class="toctree-l1"><a class="reference internal" href="humanbios-server.html">HumanBios Server</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using server API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#process-messages">Process messages</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">HumanBios</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Using server API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/server-api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-server-api">
+<h1>Using server API<a class="headerlink" href="#using-server-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p><strong>Note:</strong> writing credentials to memory is probably not the best idea. All you need is <code class="docutils literal notranslate"><span class="pre">setup</span></code> function that executes each time service is up. Server will consistently return your credentials (that you acquired after first setup)</p>
+<p>To register on the server you need to send post request to your server’s url on the following path (where <code class="docutils literal notranslate"><span class="pre">example.com</span></code> is your server’s domain) - <code class="docutils literal notranslate"><span class="pre">example.com/api/setup</span></code></p>
+<p>Request data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;security_token&quot;</span><span class="p">:</span> <span class="n">SERVER_TOKEN</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{your_app_url}</span><span class="s2">/api/webhook/out&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Server will send messages to the <code class="docutils literal notranslate"><span class="pre">&quot;url&quot;</span></code>, so it’s setup is required (webhook logic)</p>
+<p>Response data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="s2">&quot;YOUR_UNIQUE_SECURITY_TOKEN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;YOUR_CREDENTIALS_UNQIUE_NAME&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Both of the value above are required for all following requests</p>
+</div>
+<div class="section" id="process-messages">
+<h2>Process messages<a class="headerlink" href="#process-messages" title="Permalink to this headline">¶</a></h2>
+<p>Request data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{
+    &quot;user&quot;: {
+        &quot;first_name&quot;: name,
+        &quot;user_id&quot;: user_id
+    },
+    &quot;chat&quot;: {
+        &quot;chat_id&quot;: chat_id
+    },
+    &quot;service_in&quot;: service_name,
+    &quot;security_token&quot;: $(token),
+    &quot;via_instance&quot;: $(name),
+    &quot;has_message&quot;: True,
+    &quot;message&quot;: {
+        &quot;text&quot;: text
+    }
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Values:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name:</span></code></p>
+<ul>
+<li><p>user’s name, should always be present to avoid confusions and ease person-to-person communication</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">str</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_id:</span></code></p>
+<ul>
+<li><p>unqiue id of the user (for example generated by uuid.uuid4)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">str|int</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chat_id:</span></code></p>
+<ul>
+<li><p>unique id of the chat. <strong>Note: when message is send to the user, you should use chat_id to identify recipient. user_id might be different in person-to-person communication (user_id of the sender)</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">str|int</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">text:</span></code></p>
+<ul>
+<li><p>user’s message</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">str</span></code></p></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="server-core.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="humanbios-server.html" class="btn btn-neutral float-left" title="HumanBios Server" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, humanbios.org
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation for the BaseState class &mdash; HumanBios stable documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Using server API" href="server-api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> HumanBios
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="license.html">Licence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frontend-facebook.html">Frontend-Facebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frontend-telegram.html">Frontend-Telegram</a></li>
+<li class="toctree-l1"><a class="reference internal" href="humanbios-server.html">HumanBios Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server-api.html">Using server API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation for the BaseState class</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">HumanBios</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Documentation for the BaseState class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/server-core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentation-for-the-basestate-class">
+<h1>Documentation for the BaseState class<a class="headerlink" href="#documentation-for-the-basestate-class" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>This class is a parent-class for all state handlers, it provides:</dt><dd><ul class="simple">
+<li><p>interface to Google Translations API</p></li>
+<li><p>interface to our own phrases/responses</p></li>
+<li><p>automatically translates our strings to the language of the user</p></li>
+<li><p>automatically adds pictures to the chosen intents/conversation steps/questions</p></li>
+<li><p>interface to the database</p></li>
+<li><p>interface to the NLU (Natural Language Understanding unit - <a class="reference external" href="https://github.com/HumanbiOS/rasa">https://github.com/HumanbiOS/rasa</a>)</p></li>
+<li><p>automatic requests queueing</p></li>
+<li><p>automatic database updates for the <cite>User</cite> object</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example
+.. code-block:: python</p>
+<blockquote>
+<div><p>from . import base_state</p>
+<p>class MyExampleState(base_state.BaseState):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>async def entry(self, context, user, db):</dt><dd><p># your entry code goes here
+context[‘request’][‘message’][‘text’] = “Hello World!”
+# you must return status
+return base_state.OK</p>
+</dd>
+<dt>async def process(self, context, user, db):</dt><dd><p># your process code goes here
+context[‘request’][‘message’][‘text’] = “”
+# i want to move user to other state (referring by name)
+return base_state.GO_TO_STATE(“MyNextState”)</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p>Available functions:</p>
+<blockquote>
+<div><dl class="simple">
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">entry(self,</span> <span class="pre">context:</span> <span class="pre">Context,</span> <span class="pre">user:</span> <span class="pre">User,</span> <span class="pre">db):()</span></code></dt><dd><p>Function gets executed each time user enrers your state</p>
+</dd>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">process(self,</span> <span class="pre">context:</span> <span class="pre">Context,</span> <span class="pre">user:</span> <span class="pre">User,</span> <span class="pre">db):()</span></code></dt><dd><p>Function gets executed each time message gets processed by your state (Except when it enters)</p>
+</dd>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">def</span> <span class="pre">send(self,</span> <span class="pre">to_user:</span> <span class="pre">User,</span> <span class="pre">context:</span> <span class="pre">Context):()</span></code></dt><dd><p>Function creates task that sends <cite>context[‘request’]</cite> to the <cite>to_user</cite> User after executing your code inside state.</p>
+</dd>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">def</span> <span class="pre">create_task(self,</span> <span class="pre">func,</span> <span class="pre">*args,</span> <span class="pre">**kwargs):()</span></code></dt><dd><p>Function executes async function (with given args and kwargs) immediately after processing state.</p>
+</dd>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">def</span> <span class="pre">set_language(self,</span> <span class="pre">value:</span> <span class="pre">str):()</span></code></dt><dd><p>Function tells server to translate text to certain language. <cite>value</cite> must be ISO 639-1 Code language code (supported by the Google API)</p>
+</dd>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">def</span> <span class="pre">parse_button(self,</span> <span class="pre">raw_text:</span> <span class="pre">str,</span> <span class="pre">truncated=False)</span> <span class="pre">-&gt;</span> <span class="pre">Button:()</span></code></dt><dd><p>Function compares input text to all available strings (of user’s language) and if finds matching - returns Button object, which has <cite>text</cite> and <cite>key</cite> attributes, where <cite>text</cite> is <cite>raw_text</cite> and <cite>key</cite> is a key of matched string from <cite>strings.json</cite></p>
+</dd>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">download_by_url(self,</span> <span class="pre">url,</span> <span class="pre">*folders,</span> <span class="pre">filename):()</span></code></dt><dd><p>Function asynchroniously downloads file from given <cite>url</cite> to the given <em>relative</em> path (joined folders and filename). The <cite>folders</cite> value will be joined to the default media path. Default media path - PROJ_ROOT/media</p>
+</dd>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">def</span> <span class="pre">exists(self,</span> <span class="pre">*args):()</span></code></dt><dd><p>Function checks if file exists under given path</p>
+</dd>
+<dt><code class="xref py py-func docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">translate(self,</span> <span class="pre">text:</span> <span class="pre">str,</span> <span class="pre">target:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">str:()</span></code></dt><dd><p>Function is wrapper for translation_text from translation module. Simply returns translated <cite>text</cite> for the <cite>target</cite> language. Good usage example if translating text between users.</p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="server-api.html" class="btn btn-neutral float-left" title="Using server API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, humanbios.org
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
