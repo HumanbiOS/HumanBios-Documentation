@@ -171,25 +171,24 @@
 </dd>
 </dl>
 <p>Example
-.. code-block:: python</p>
-<blockquote>
-<div><p>from . import base_state</p>
-<p>class MyExampleState(base_state.BaseState):</p>
-<blockquote>
-<div><dl class="simple">
-<dt>async def entry(self, context, user, db):</dt><dd><p># your entry code goes here
-context[‘request’][‘message’][‘text’] = “Hello World!”
-# you must return status
-return base_state.OK</p>
-</dd>
-<dt>async def process(self, context, user, db):</dt><dd><p># your process code goes here
-context[‘request’][‘message’][‘text’] = “”
-# i want to move user to other state (referring by name)
-return base_state.GO_TO_STATE(“MyNextState”)</p>
-</dd>
-</dl>
-</div></blockquote>
-</div></blockquote>
+.. function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">base_state</span>
+
+<span class="k">class</span> <span class="nc">MyExampleState</span><span class="p">(</span><span class="n">base_state</span><span class="o">.</span><span class="n">BaseState</span><span class="p">):</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+        <span class="c1"># your entry code goes here</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;request&#39;</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Hello World!&quot;</span>
+        <span class="c1"># you must return status</span>
+        <span class="k">return</span> <span class="n">base_state</span><span class="o">.</span><span class="n">OK</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+        <span class="c1"># your process code goes here</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;request&#39;</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="c1"># i want to move user to other state (referring by name)</span>
+        <span class="k">return</span> <span class="n">base_state</span><span class="o">.</span><span class="n">GO_TO_STATE</span><span class="p">(</span><span class="s2">&quot;MyNextState&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Available functions:</p>
 <blockquote>
 <div><dl class="simple">

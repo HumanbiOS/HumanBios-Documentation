@@ -12,8 +12,8 @@ This class is a parent-class for all state handlers, it provides:
         - automatic database updates for the `User` object
 
 Example  
-.. code-block:: python
-
+.. function::
+    
     from . import base_state
     
     class MyExampleState(base_state.BaseState):
