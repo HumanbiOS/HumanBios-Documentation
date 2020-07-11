@@ -11,7 +11,12 @@ This class is a parent-class for all state handlers, it provides:
         - automatic database updates for the `User` object
 
 Example  
-.. code-block:: python
+.. literalinclude:: filename
+    :linenos:
+    :language: python
+    :lines: 1, 3-5
+    :start-after: 3
+    :end-before: 5
 
     from . import base_state
 
