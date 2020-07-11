@@ -16,11 +16,13 @@ Example
     from . import base_state
 
     class MyExampleState(base_state.BaseState):
+        
         async def entry(self, context, user, db):
             # your entry code goes here
             context['request']['message']['text'] = "Hello World!"
             # you must return status
             return base_state.OK
+        
         async def process(self, context, user, db):
             # your process code goes here
             context['request']['message']['text'] = ""
